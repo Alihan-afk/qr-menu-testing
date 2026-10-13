@@ -2,7 +2,7 @@
 name: Bug report
 about: Сообщить об ошибке в QR-меню
 title: "[BUG] "
-labels: bug, status: new
+labels: ["bug", "status: new"]
 ---
 
 ## Шаги воспроизведения
