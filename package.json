@@ -1,0 +1,11 @@
+{
+  "name": "qr-menu-testing",
+  "version": "0.1.0",
+  "description": "QR-Menu оқу прототипі: функционалдық, API және жүктемелік тестілеуге арналған",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:api": "node tests/run_tests.js"
+  },
+  "license": "MIT"
+}

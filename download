@@ -1,0 +1,8 @@
+node_modules/
+logs/
+results.json
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+.vscode/

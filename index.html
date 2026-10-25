@@ -1,0 +1,14 @@
+<!doctype html><html lang="kk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QR-Menu</title>
+<style>body{font-family:Arial,sans-serif;max-width:480px;margin:16px auto;padding:0 12px}li{margin:8px 0}button{margin-left:8px}</style></head><body>
+<h2>QR-Menu · Үстел №<span id="t">12</span></h2><ul id="menu"></ul><h3>Себет</h3><div id="cart">бос</div>
+<button onclick="order()">Тапсырыс беру</button> <button onclick="pay()">Төлеу</button><pre id="out"></pre>
+<script>
+const table=new URLSearchParams(location.search).get('table')||12; document.getElementById('t').textContent=table;
+let cart=JSON.parse(localStorage.getItem('cart')||'[]'), orderId=null;
+const show=()=>{localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cart').textContent=cart.length?cart.map(c=>c.id+'×'+c.qty).join(', '):'бос'};
+fetch('/api/menu?table='+table).then(r=>r.json()).then(l=>{menu.innerHTML=l.map(i=>`<li>${i.name} — ${i.price} ₸<button onclick="add(${i.id})">+</button></li>`).join('')});
+function add(id){const c=cart.find(x=>x.id===id);c?c.qty++:cart.push({id,qty:1});show()}
+async function order(){const r=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({table:+table,items:cart})});const j=await r.json();orderId=j.id;out.textContent=r.status+' '+JSON.stringify(j,null,1)}
+async function pay(){const r=await fetch('/api/payments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,cardNumber:'4242424242424242',tipPercent:10})});out.textContent=r.status+' '+JSON.stringify(await r.json(),null,1)}
+show();
+</script></body></html>
